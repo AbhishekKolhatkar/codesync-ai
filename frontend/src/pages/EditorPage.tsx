@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import CodeEditor from '../components/CodeEditor';
 import { Code2, FolderTree, Settings, Users } from 'lucide-react';
 import { socket } from '../socket';
@@ -7,19 +7,21 @@ import { socket } from '../socket';
 export default function EditorPage() {
     // Extract the roomId from the URL (e.g., /room/12345)
     const { roomId } = useParams();
+    const location = useLocation();
+    const username = location.state?.username || "Anonymous Visitor";
 
     useEffect(() => {
         socket.connect();
 
         // Tell the backend to put this user in this specific room
         if (roomId) {
-            socket.emit('join-room', roomId);
+            socket.emit('join-room', { roomId, username });
         }
 
         return () => {
             socket.disconnect();
         };
-    }, [roomId]);
+    }, [roomId, username]);
 
     return (
         <div className="flex h-screen bg-[#1e1e1e] text-gray-400 overflow-hidden">

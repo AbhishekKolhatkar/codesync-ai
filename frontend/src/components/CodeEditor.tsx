@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { Play } from 'lucide-react';
+import { Play, Sparkles } from 'lucide-react';
 import { socket } from '../socket';
-import { executeCode } from '../api';
+import { executeCode, analyzeCodeWithAI } from '../api';
 
 interface CodeEditorProps {
     roomId?: string;
@@ -13,6 +13,7 @@ export default function CodeEditor({ roomId }: CodeEditorProps) {
     const [language, setLanguage] = useState('javascript');
     const [output, setOutput] = useState('');
     const [isRunning, setIsRunning] = useState(false);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     useEffect(() => {
         socket.on('receive-code', (newCode: string) => {
@@ -22,6 +23,14 @@ export default function CodeEditor({ roomId }: CodeEditorProps) {
             socket.off('receive-code');
         };
     }, []);
+
+    const handleAIReview = async () => {
+        setIsAnalyzing(true);
+        setOutput("AI is reviewing your code... please wait.");
+        const result = await analyzeCodeWithAI(language, code);
+        setOutput(result);
+        setIsAnalyzing(false);
+    };
 
     const handleEditorChange = (value: string | undefined) => {
         const currentCode = value || "";
@@ -59,6 +68,26 @@ export default function CodeEditor({ roomId }: CodeEditorProps) {
                     <Play className="w-4 h-4" />
                     {isRunning ? 'Running...' : 'Run Code'}
                 </button>
+
+                <div className="flex gap-3">
+                    <button
+                        onClick={handleAIReview}
+                        disabled={isAnalyzing || isRunning}
+                        className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-1.5 rounded transition-colors disabled:opacity-50 font-semibold"
+                    >
+                        <Sparkles className="w-4 h-4" />
+                        {isAnalyzing ? 'Analyzing...' : 'Ask AI'}
+                    </button>
+
+                    <button
+                        onClick={handleRunCode}
+                        disabled={isRunning || isAnalyzing}
+                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded transition-colors disabled:opacity-50 font-semibold"
+                    >
+                        <Play className="w-4 h-4" />
+                        {isRunning ? 'Running...' : 'Run Code'}
+                    </button>
+                </div>
             </div>
 
             {/* Main Editor Area */}
