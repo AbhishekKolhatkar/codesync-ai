@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Code2 } from 'lucide-react';
+import { Code2, BrainCircuit } from 'lucide-react';
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -83,6 +83,20 @@ export default function HomePage() {
                             new room
                         </a>
                     </span>
+
+                    <div className="relative flex items-center py-5">
+                        <div className="flex-grow border-t border-[#404040]"></div>
+                        <span className="flex-shrink-0 mx-4 text-gray-500 text-sm">OR</span>
+                        <div className="flex-grow border-t border-[#404040]"></div>
+                    </div>
+
+                    <button
+                        onClick={() => navigate('/problems')}
+                        className="w-full flex items-center justify-center gap-3 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-bold py-3 px-4 outline outline-1 outline-emerald-600/50 rounded transition-colors"
+                    >
+                        <BrainCircuit className="w-5 h-5" />
+                        Practice DSA Problems
+                    </button>
                 </div>
             </div>
         </div>
