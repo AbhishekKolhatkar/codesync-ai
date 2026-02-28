@@ -5,12 +5,17 @@ import { socket } from '../socket';
 import { executeCode, analyzeCodeWithAI } from '../api';
 import ReactMarkdown from 'react-markdown';
 
+import type { Problem } from '../api';
+
 interface CodeEditorProps {
     roomId?: string;
+    problemId?: string | null;
+    problem?: Problem | null;
+    nextProblemId?: string | null;
     onLanguageChange?: (language: string) => void;
 }
 
-export default function CodeEditor({ roomId, onLanguageChange }: CodeEditorProps) {
+export default function CodeEditor({ roomId, problemId, problem, nextProblemId, onLanguageChange }: CodeEditorProps) {
     const [code, setCode] = useState(`console.log('Hello, interviews!');`);
     const [language, setLanguage] = useState('javascript');
     const [output, setOutput] = useState('');
