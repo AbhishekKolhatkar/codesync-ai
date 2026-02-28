@@ -96,9 +96,15 @@ app.post('/ai-review', async (req, res) => {
 });
 // -----------------------------------------------
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://codesync-ai-coral.vercel.app'
+];
+
 const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: allowedOrigins,
         methods: ['GET', 'POST']
     }
 });
