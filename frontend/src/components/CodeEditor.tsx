@@ -15,7 +15,7 @@ interface CodeEditorProps {
     onLanguageChange?: (language: string) => void;
 }
 
-export default function CodeEditor({ roomId, problemId, problem, nextProblemId, onLanguageChange }: CodeEditorProps) {
+export default function CodeEditor({ roomId, problemId: _problemId, problem, nextProblemId, onLanguageChange }: CodeEditorProps) {
     const [code, setCode] = useState(`console.log('Hello, interviews!');`);
     const [language, setLanguage] = useState('javascript');
     const [output, setOutput] = useState('');
