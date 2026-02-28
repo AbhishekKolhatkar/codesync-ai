@@ -35,6 +35,11 @@ app.post('/execute', async (req, res) => {
         javascript: { lang: "nodejs", versionIndex: "0" },
         typescript: { lang: "nodejs", versionIndex: "0" }, // JDoodle runs TS via Node
         python: { lang: "python3", versionIndex: "3" },
+        java: { lang: "java", versionIndex: "4" },
+        cpp: { lang: "cpp", versionIndex: "5" },
+        csharp: { lang: "csharp", versionIndex: "4" },
+        go: { lang: "go", versionIndex: "4" },
+        rust: { lang: "rust", versionIndex: "4" },
     };
 
     const config = languageMap[language];
