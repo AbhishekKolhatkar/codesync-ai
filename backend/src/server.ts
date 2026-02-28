@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 // Enable CORS for your frontend
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: '*',
     methods: ['GET', 'POST']
 }));
 
@@ -98,7 +98,7 @@ app.post('/ai-review', async (req, res) => {
 
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:5173', 'http://localhost:3000'],
+        origin: '*',
         methods: ['GET', 'POST']
     }
 });
